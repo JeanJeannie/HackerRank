@@ -1,7 +1,7 @@
 # VS files
 */bin/*
 */obj/*
-
+*.suo
 
 # Windows image file caches
 Thumbs.db
