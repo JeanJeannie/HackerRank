@@ -14,44 +14,31 @@ namespace HackerRank
    {
       static void Main(string[] args)
       {
-         MaxMin();
-//         Console.ReadLine();
+         PiSong(Convert.ToInt32(Console.ReadLine()));
+         //Console.ReadLine();
       }
 
-      public static void MaxMin()
+      public static void PiSong(int numOfTests)
       {
-         var listLength = Convert.ToInt64(Console.ReadLine());
-         var subsetLength = Convert.ToInt32(Console.ReadLine());
-
-         var listOfNums = new List<long>();
-         for (int listNo = 0; listNo < listLength; listNo++)
+         int[] pi = new[] { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 3 };
+         for (int testNo = 0; testNo < numOfTests; testNo++)
          {
-            listOfNums.Add(Convert.ToInt64(Console.ReadLine()));
-         }
+            var isPi = true;
+            var inputLine = Console.ReadLine().Split(' ').ToArray();
+            for (int wordNo = 0; wordNo < inputLine.Length; wordNo++)
+            {
+               if (inputLine[wordNo].Length != pi[wordNo])
+               {
+                  isPi = false;
+                  break;
+               }
+            }
 
-         var sortedList = listOfNums.OrderBy(o => o).ToArray();
-         var diffLiff = new List<minMaxNum>();
-         for (int i = 0; i < sortedList.Length-subsetLength+1; i++)
-         {
-            diffLiff.Add(new minMaxNum(sortedList[i], sortedList[i + subsetLength - 1] - sortedList[i]));
-         }
+            if (isPi)
+               Console.WriteLine("It's a pi song.");
+            else
+               Console.WriteLine("It's not a pi song.");
 
-         var firstNum = diffLiff.OrderBy(o => o.DiffAhead).First();
-         var subsetList = sortedList.Where(w => w >= firstNum.Num).Take(subsetLength).ToList();
-         var ans1 = subsetList.Last() - subsetList.First();
-
-         Console.WriteLine(ans1);
-
-      }
-
-      public class minMaxNum {
-         public long Num { get; set; }
-         public long DiffAhead { get; set; }
-
-         public minMaxNum(long num, long diffAhead)
-         {
-            Num = num;
-            DiffAhead = diffAhead;
          }
       }
    }
