@@ -8,6 +8,24 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+        public static void FillingJars()
+      {
+         var tmpInput = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
+         var numOfJars = tmpInput[0];
+         var numOfOperations = tmpInput[1];
+
+         long totalSum = 0;
+         for (int opNum = 0; opNum < numOfOperations; opNum++)
+         {
+            tmpInput = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
+            var totalThisOp = (tmpInput[1] - tmpInput[0] + 1) * tmpInput[2];
+            totalSum = totalSum + totalThisOp;
+         }
+         var average = Math.Floor((decimal)totalSum / (decimal)numOfJars);
+         Console.WriteLine(average);
+      }
+   
+
 
       public static void SherlockAndTheBeast(int numOfTests)
       {
