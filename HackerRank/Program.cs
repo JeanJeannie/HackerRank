@@ -24,21 +24,7 @@ namespace HackerRank
          {
             var numOfDigits = Convert.ToInt32(Console.ReadLine());
             var result = GetFivesAndThrees(numOfDigits);
-            for (int i = 0; i < result.NumOfFives; i++)
-            {
-               Console.Write("5");
-            }
-
-            for (int i = 0; i < result.NumOfThrees; i++)
-            {
-               Console.Write("3");
-            }
-
-            if (result.NumOfThrees == 0 && result.NumOfFives == 0)
-            {
-               Console.Write("-1");
-            }
-            Console.Write("/n");
+            Console.WriteLine(result.OutputString());
          }
       }
 
@@ -64,25 +50,14 @@ namespace HackerRank
       public class FivesAndThrees {
          public int NumOfFives { get; set; }
          public int NumOfThrees { get; set; }
-         public double MaxNumOfFives { get; set; }
-         public double MaxNumOfThrees { get; set; }
          public int NumOfDigits { get; set; }
 
-         public FivesAndThrees()
-         {
-            NumOfFives = 0;
-            NumOfThrees = 0;
-            MaxNumOfFives = 0;
-            MaxNumOfThrees = 0;
-         }
 
          public FivesAndThrees(int numOfDigits)
          {
             NumOfDigits = numOfDigits;
             NumOfFives = 0;
             NumOfThrees = 0;
-            MaxNumOfFives = Math.Floor((double)numOfDigits/3);
-            MaxNumOfThrees = Math.Floor((double)numOfDigits/5);
          }
 
          public void Process()
@@ -105,25 +80,25 @@ namespace HackerRank
             }
 
             var resultFound = false;
-            var tmpNumFives = NumOfDigits;
-            var tmpNumThrees = 0;
+            NumOfFives = NumOfDigits;
+            NumOfThrees = 0;
             while (!resultFound)
             {
-               if (tmpNumFives % 3 == 0 && tmpNumThrees % 5 == 0)
+               if (NumOfFives % 3 == 0 && NumOfThrees % 5 == 0)
                {
-                  NumOfFives = tmpNumFives;
-                  NumOfThrees = tmpNumThrees;
                   return;
                }
 
                // take 1 off of the tmpNumFives and retry
-               tmpNumFives--;
-               tmpNumThrees++;
+               NumOfFives--;
+               NumOfThrees++;
 
-               if (tmpNumFives == 0 || tmpNumThrees == 0)
+               if (NumOfFives == 0) //|| NumOfThrees == 0)
                {
-                  NumOfFives = 0;
-                  NumOfThrees = 0;
+                  if (NumOfThrees > 0 && NumOfDigits % 5 == 0)
+                     NumOfThrees = NumOfDigits;
+                  else
+                     NumOfThrees = 0;
                   return;
                }
             }
