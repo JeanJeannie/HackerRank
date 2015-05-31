@@ -8,6 +8,64 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+      public static void SmithNumber(int num)
+      {
+         var primeFactors = PrimeFactors(num);
+         var digitSum = DigitSum(num);
+         var sumPrimeFactors = SumDigits(primeFactors);
+
+         //Console.WriteLine("prime factors [{0}]", string.Join(" ", primeFactors.ToArray()));
+         //Console.WriteLine("digit sum  [{0}]", digitSum);
+         //Console.WriteLine("factor sum [{0}]", sumPrimeFactors);
+
+         if (sumPrimeFactors == digitSum)
+            Console.WriteLine(1);
+         else
+            Console.WriteLine(0);
+      }
+
+      public static long DigitSum(long num)
+      {
+         var digits = num.ToString().ToCharArray().Select(s => Convert.ToInt64(s.ToString())).ToList(); //.Sum(s => Convert.ToInt32(s));
+         return SumDigits(digits);
+      }
+
+      public static long SumDigits(List<long> primeFactors)
+      {
+         long ret = 0;
+         foreach (var factor in primeFactors)
+         {
+            ret = ret + factor.ToString().ToCharArray().Select(s => Convert.ToInt64(s.ToString())).Sum();
+
+         }
+         return ret;
+      }
+
+      public static List<long> PrimeFactors(long num)
+      {
+         var primeFactorList = new List<long>();
+         while (num % 2 == 0)
+         {
+            primeFactorList.Add(2);
+            num = num / 2;
+         }
+
+         for (long i = 3; i < Math.Ceiling(Math.Sqrt(num)); i++)
+         {
+            while (num % i == 0)
+            {
+               primeFactorList.Add(i);
+               num = num / i;
+            }
+         }
+
+         if (num > 2)
+            primeFactorList.Add(num);
+
+         return primeFactorList;
+      }
+
+
       public static void PiSong(int numOfTests)
       {
          int[] pi = new[] { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 3 };
