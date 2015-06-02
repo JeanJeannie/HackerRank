@@ -12,11 +12,46 @@ namespace HackerRank
 
    class Solution
    {
-      static void Main(string[] args)
+            static void Main(string[] args)
       {
-         IsFibo(Convert.ToInt32(Console.ReadLine()));            
-//         Console.ReadLine();
+          FunnyString(Convert.ToInt32(Console.ReadLine()));
+          //Console.ReadLine();
       }
+
+       public static void FunnyString(int numOfTestCases)
+       {
+           for (int i = 0; i < numOfTestCases; i++)
+           {
+               var inputString = Console.ReadLine().ToCharArray();
+
+               var strLen = inputString.Length;
+               var isFunny = true;
+               for (int j = 0; j < Math.Ceiling((double)inputString.Length/2); j++)
+               {
+                   if (strLen == 1)
+                   {
+                       break;
+                   }
+
+                   var diffLeft = Math.Abs(inputString[j + 1] - inputString[j]);
+                   var diffRight = Math.Abs(inputString[strLen - (j + 1)] - inputString[strLen - (j + 2)]);
+                   if (diffLeft != diffRight)
+                   {
+                       isFunny = false;
+                       break;
+                   }
+               }
+
+               if (isFunny)
+               {
+                   Console.WriteLine("Funny");
+               }
+               else
+               {
+                   Console.WriteLine("Not Funny");
+               }
+           }
+       }
 
       public static void IsFibo(int numTestCases)
       {
