@@ -14,44 +14,26 @@ namespace HackerRank
    {
       static void Main(string[] args)
       {
-         Pangrams();
+         AlternatingCharacters(Convert.ToInt32(Console.ReadLine()));
          //Console.ReadLine();
       }
 
-      public static void Pangrams()
-      { 
-         var inputString = Console.ReadLine();
-         var alphaDict = InitialiseAlphaDict();
-
-         var charString = inputString.ToCharArray();
-         for (int i = 0; i < charString.Length; i++)
-         {
-            var currChar = charString[i].ToString().ToLower();
-            if (alphaDict.ContainsKey(currChar)  && !alphaDict[currChar])
-            {
-               alphaDict[currChar] = true;
-            }
-
-            if (!alphaDict.Any(w => w.Value == false))
-            {
-               Console.WriteLine("pangram");
-               return;
-            }
-         }
-
-         Console.WriteLine("not pangram");
-      }
-
-      public static IDictionary<string, bool> InitialiseAlphaDict()
+      public static void AlternatingCharacters(int numOfTestCases)
       {
-         var retDict = new Dictionary<string, bool>();
-
-         for (char currChar = 'a'; currChar <= 'z'; currChar++)
+         for (int testNo = 0; testNo < numOfTestCases; testNo++)
          {
-            retDict.Add(currChar.ToString(), false);
+            var inputString = Console.ReadLine().ToString().ToCharArray();
+            var deletes = 0;
+            for (int i = 1; i < inputString.Length; i++)
+            {
+               if (inputString[i - 1] == inputString[i])
+               {
+                  deletes++;
+               }
+            }
+            Console.WriteLine(deletes);
          }
-
-         return retDict;
       }
+
    }
 }
