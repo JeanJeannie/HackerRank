@@ -14,36 +14,21 @@ namespace HackerRank
    {
       static void Main(string[] args)
       {
-         GameOfThrones1();
+         GemStones();
          //Console.ReadLine();
       }
 
-      public static void GameOfThrones1()
+      public static void GemStones()
       {
-         var inputString = Console.ReadLine();
-         var dict = new Dictionary<string, int>();
+            var numOfLines = Convert.ToInt32(Console.ReadLine());
+            var elements = Console.ReadLine().ToCharArray().Select(s => s.ToString()).Distinct().ToList();
 
-         for (int i = 0; i < inputString.Length; i++)
-			{
-			   if (dict.ContainsKey(inputString[i].ToString()))
+            for (int lineNo = 1; lineNo < numOfLines; lineNo++)
             {
-               dict[inputString[i].ToString()]++;
+               var nextLine = Console.ReadLine().ToCharArray();
+               elements = elements.Where(w => nextLine.Select(s => s.ToString()).Contains(w)).ToList();
             }
-            else
-            {
-               dict.Add(inputString[i].ToString(), 1);
-            }
-			}
-         // should all be even except for one
-         var oddCount = dict.Where(w => w.Value%2 != 0).Count();
-         if (oddCount > 1)
-         {
-            Console.WriteLine("NO");
+            Console.WriteLine(elements.Count());
          }
-         else
-         {
-            Console.WriteLine("YES");
-         }
-      }
    }
 }

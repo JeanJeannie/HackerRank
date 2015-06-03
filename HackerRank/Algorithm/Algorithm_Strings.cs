@@ -8,6 +8,35 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_Strings
    {
+      public static void GameOfThrones1()
+      {
+         var inputString = Console.ReadLine();
+         var dict = new Dictionary<string, int>();
+
+         for (int i = 0; i < inputString.Length; i++)
+         {
+            if (dict.ContainsKey(inputString[i].ToString()))
+            {
+               dict[inputString[i].ToString()]++;
+            }
+            else
+            {
+               dict.Add(inputString[i].ToString(), 1);
+            }
+         }
+         // should all be even except for one
+         var oddCount = dict.Where(w => w.Value % 2 != 0).Count();
+         if (oddCount > 1)
+         {
+            Console.WriteLine("NO");
+         }
+         else
+         {
+            Console.WriteLine("YES");
+         }
+      }
+
+
       public static void AlternatingCharacters(int numOfTestCases)
       {
          for (int testNo = 0; testNo < numOfTestCases; testNo++)
