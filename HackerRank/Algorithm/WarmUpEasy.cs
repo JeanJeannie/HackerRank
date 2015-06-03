@@ -8,6 +8,40 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+      public static void IsFibo(int numTestCases)
+      {
+         for (int i = 0; i < numTestCases; i++)
+         {
+            var num = Convert.ToInt64(Console.ReadLine());
+            if (IsFibonacciNumber(num))
+               Console.WriteLine("IsFibo");
+            else
+               Console.WriteLine("IsNotFibo");
+         }
+      }
+
+
+      public static bool IsFibonacciNumber(long num)
+      {
+         long currNum = 1;
+         long lastNum = 0;
+         long fiboNum = currNum + lastNum;
+
+         if (num == currNum || num == lastNum)
+            return true;
+
+         while (fiboNum <= num)
+         {
+            fiboNum = currNum + lastNum;
+            lastNum = currNum;
+            currNum = fiboNum;
+
+            if (num == fiboNum)
+               return true;
+         }
+         return false;
+      }
+
       public static void ModifiedKaprekarNumbers()
       {
          var lowestNumber = Convert.ToInt32(Console.ReadLine());
