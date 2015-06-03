@@ -8,6 +8,25 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_Strings
    {
+      public static void AlternatingCharacters(int numOfTestCases)
+      {
+         for (int testNo = 0; testNo < numOfTestCases; testNo++)
+         {
+            var inputString = Console.ReadLine().ToString().ToCharArray();
+            var deletes = 0;
+            for (int i = 1; i < inputString.Length; i++)
+            {
+               if (inputString[i - 1] == inputString[i])
+               {
+                  deletes++;
+               }
+            }
+            Console.WriteLine(deletes);
+         }
+      }
+
+
+
       public static void Pangrams()
       {
          var inputString = Console.ReadLine();

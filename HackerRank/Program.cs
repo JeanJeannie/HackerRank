@@ -14,26 +14,36 @@ namespace HackerRank
    {
       static void Main(string[] args)
       {
-         AlternatingCharacters(Convert.ToInt32(Console.ReadLine()));
+         GameOfThrones1();
          //Console.ReadLine();
       }
 
-      public static void AlternatingCharacters(int numOfTestCases)
+      public static void GameOfThrones1()
       {
-         for (int testNo = 0; testNo < numOfTestCases; testNo++)
-         {
-            var inputString = Console.ReadLine().ToString().ToCharArray();
-            var deletes = 0;
-            for (int i = 1; i < inputString.Length; i++)
+         var inputString = Console.ReadLine();
+         var dict = new Dictionary<string, int>();
+
+         for (int i = 0; i < inputString.Length; i++)
+			{
+			   if (dict.ContainsKey(inputString[i].ToString()))
             {
-               if (inputString[i - 1] == inputString[i])
-               {
-                  deletes++;
-               }
+               dict[inputString[i].ToString()]++;
             }
-            Console.WriteLine(deletes);
+            else
+            {
+               dict.Add(inputString[i].ToString(), 1);
+            }
+			}
+         // should all be even except for one
+         var oddCount = dict.Where(w => w.Value%2 != 0).Count();
+         if (oddCount > 1)
+         {
+            Console.WriteLine("NO");
+         }
+         else
+         {
+            Console.WriteLine("YES");
          }
       }
-
    }
 }
