@@ -14,32 +14,41 @@ namespace HackerRank
    {
       static void Main(string[] args)
       {
-         //Socks(Convert.ToInt32(Console.ReadLine()));
-           Console.ReadLine();
+         MakeItAnAnagram();
+         //         Console.ReadLine();
       }
 
       public static void MakeItAnAnagram()
       {
          var numOfChanges = 0;
-         var string1 = Console.ReadLine(); 
-         var string2 = Console.ReadLine(); 
+         var string1 = Console.ReadLine();
+         var string2 = Console.ReadLine();
 
-         for (int i = 0; i < string2.Length; i++)
+         numOfChanges = numOfChanges + MakeAnagram(string2, string1);
+         numOfChanges = numOfChanges + MakeAnagram(string1, string2);
+
+
+         Console.WriteLine(numOfChanges);
+
+      }
+
+      public static int MakeAnagram(string stringToAnagram, string stringToChange)
+      {
+         var numOfChanges = 0;
+         for (int i = 0; i < stringToAnagram.Length; i++)
          {
-            var curPos = string1.IndexOf(string2[i].ToString());
+            var curPos = stringToChange.IndexOf(stringToAnagram[i].ToString());
             if (curPos == -1)
             {
                numOfChanges++;
             }
             else
             {
-               string1 = string1.Remove(curPos, 1);
+               stringToChange = stringToChange.Remove(curPos, 1);
             }
          }
-         Console.WriteLine(numOfChanges);
-
+         return numOfChanges;
       }
-
 
    }
 }
