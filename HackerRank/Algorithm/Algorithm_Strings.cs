@@ -8,6 +8,20 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_Strings
    {
+      public static void GemStones()
+      {
+         var numOfLines = Convert.ToInt32(Console.ReadLine());
+         var elements = Console.ReadLine().ToCharArray().Select(s => s.ToString()).Distinct().ToList();
+
+         for (int lineNo = 1; lineNo < numOfLines; lineNo++)
+         {
+            var nextLine = Console.ReadLine().ToCharArray();
+            elements = elements.Where(w => nextLine.Select(s => s.ToString()).Contains(w)).ToList();
+         }
+         Console.WriteLine(elements.Count());
+      }
+
+
       public static void GameOfThrones1()
       {
          var inputString = Console.ReadLine();

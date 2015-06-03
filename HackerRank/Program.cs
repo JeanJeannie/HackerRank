@@ -14,21 +14,41 @@ namespace HackerRank
    {
       static void Main(string[] args)
       {
-         GemStones();
-         //Console.ReadLine();
+         Anagram(Convert.ToInt32(Console.ReadLine()));
+       //  Console.ReadLine();
       }
 
-      public static void GemStones()
+      public static void Anagram(int numOfTestCases)
       {
-            var numOfLines = Convert.ToInt32(Console.ReadLine());
-            var elements = Console.ReadLine().ToCharArray().Select(s => s.ToString()).Distinct().ToList();
+         for (int testNo = 0; testNo < numOfTestCases; testNo++)
+         {
+            var inputString = Console.ReadLine();
 
-            for (int lineNo = 1; lineNo < numOfLines; lineNo++)
+            if (inputString.Length % 2 != 0)
             {
-               var nextLine = Console.ReadLine().ToCharArray();
-               elements = elements.Where(w => nextLine.Select(s => s.ToString()).Contains(w)).ToList();
+               Console.WriteLine(-1);
+               continue;
             }
-            Console.WriteLine(elements.Count());
+
+            var numOfChanges = 0;
+            var string1 = inputString.Substring(0, (inputString.Length / 2)); //.ToCharArray().Select(s => s.ToString()).ToList();
+            var string2 = inputString.Substring((inputString.Length / 2)); //.ToCharArray().Select(s => s.ToString()).ToList();
+
+            for (int i = 0; i < string2.Length; i++)
+            {
+               var curPos = string1.IndexOf(string2[i].ToString());
+               if (curPos == -1)
+               {
+                  numOfChanges++;
+               }
+               else
+               {
+                  string1 = string1.Remove(curPos, 1);
+               }
+            }
+            Console.WriteLine(numOfChanges);
          }
+      }
+
    }
 }
