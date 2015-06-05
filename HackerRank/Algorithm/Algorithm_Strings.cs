@@ -8,6 +8,24 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_Strings
    {
+      public static void TwoStrings(int numOfTestCases)
+      {
+         for (int i = 0; i < numOfTestCases; i++)
+         {
+            var firstString = Console.ReadLine().ToCharArray();
+            var secondString = Console.ReadLine().ToCharArray();
+
+            bool found = false;
+            if (firstString.Intersect(secondString).Any())
+               found = true;
+
+            if (found)
+               Console.WriteLine("YES");
+            else
+               Console.WriteLine("NO");
+
+         }
+      }
 
       public static void MakeItAnAnagram()
       {
