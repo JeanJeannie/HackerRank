@@ -14,65 +14,91 @@ namespace HackerRank
    {
       static void Main(string[] args)
       {
-         PalindromeIndex(Convert.ToInt32(Console.ReadLine()));
-        // Console.ReadLine();
+         MorganAndAString(Convert.ToInt32(Console.ReadLine()));
+//         Console.ReadLine();
       }
 
-      public static void PalindromeIndex(int numOfTestCases)
+      public static void MorganAndAString(int numOfTestCases)
       {
          for (int testNo = 0; testNo < numOfTestCases; testNo++)
          {
-            var inputString = Console.ReadLine();
-            Console.WriteLine(IsPalindromic(inputString));
+            var firstString = Console.ReadLine().ToCharArray();
+            var secondString = Console.ReadLine().ToCharArray();
+            var answer = new StringBuilder(); new List<char>();
+            
 
-         }
-      }
+            var firstPos = 0;
+            var secondPos = 0;
 
-      public static bool FastLook(string inputString, int leftStart, int rightStart, out int? leftEnd, out int? rightEnd)
-      {
-         leftEnd = null;
-         rightEnd = null;
-         var left = leftStart;
-         var right = rightStart;
-         var tmpString = inputString.ToCharArray();
+            var stop = false;
 
-         while (left <= right)
-         {
-            if (tmpString[left] != tmpString[right])
+            while (!stop)
             {
-               leftEnd = left;
-               rightEnd = right;
-               return false;
+               if (firstString[firstPos] == secondString[secondPos])
+               {
+                  // need to scan down until we find the string with the lowest first non matching char
+                  var tmpFirst = firstPos;
+                  var tmpSecond = secondPos;
+                  while (firstString[tmpFirst] == secondString[secondPos])
+                  {
+                     tmpFirst++;
+                     tmpSecond++;
+
+                     if (tmpFirst == firstString.Length || tmpSecond == secondString.Length)
+                     {
+                        break;
+                     }
+                  }
+
+                  if (firstString[tmpFirst] < secondString[tmpSecond])
+                  {
+                     answer.Append(firstString[firstPos]);
+                     firstPos++;
+                  }
+                  else
+                  {
+                     answer.Append(secondString[secondPos]);
+                     secondPos++;
+                  }
+               }
+               else
+               {
+                  if (firstString[firstPos] <= secondString[secondPos])
+                  {
+                     answer.Append(firstString[firstPos]);
+                     firstPos++;
+                  }
+                  else
+                  {
+                     if (secondString[secondPos] < firstString[firstPos])
+                     {
+                        answer.Append(secondString[secondPos]);
+                        secondPos++;
+                     }
+                  }
+               }
+               if (firstPos >= firstString.Length)
+               {
+                  for (int i = secondPos; i < secondString.Length; i++)
+                  {
+                     answer.Append(secondString[i]);
+                  }
+                  stop = true;
+                  break;
+               }
+
+               if (secondPos >= secondString.Length)
+               {
+                  for (int j = firstPos; j < firstString.Length; j++)
+                  {
+                     answer.Append(firstString[j]);
+                  }
+                  stop = true;
+                  break;
+               }            
             }
-            left++;
-            right--;
+            Console.WriteLine(answer);
          }
-         return true;
-      }
-
-      public static int IsPalindromic(string inputString)
-      {
-         var leftPos = 0;
-         var rightPos = inputString.Length-1;
-         int? outLeft;
-         int? outRight;
-
-         if (!FastLook(inputString, leftPos, rightPos, out outLeft, out outRight))
-         {
-            leftPos = (int)outLeft;
-            rightPos = (int)outRight;
-            if (FastLook(inputString, leftPos + 1, rightPos, out outLeft, out outRight))
-            {
-               return (int)leftPos;
-            }
-
-            if (FastLook(inputString, leftPos, rightPos - 1, out outLeft, out outRight))
-            {
-               return (int)rightPos;
-            }
-            return 0;
-         }
-         return -1;
       }
    }
 }
