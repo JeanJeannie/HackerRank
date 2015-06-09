@@ -15,25 +15,11 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-           TutorialIntro();
+          // InsertionSortPart1();
+           Console.ReadLine();
        }
 
-       public static void TutorialIntro()
-       {
-           var valueToFind = Convert.ToInt64(Console.ReadLine());
-           var numOfElements = Convert.ToInt64(Console.ReadLine());
-           var array = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
-
-           for (int i = 0; i < numOfElements; i++)
-           {
-               if (array[i] == valueToFind)
-               {
-                   Console.WriteLine(i);
-                   return;                   
-               }
-           }
-       }
-
+    
 
 
        public static void MorganAndAString(int numOfTestCases)
