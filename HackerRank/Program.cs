@@ -12,33 +12,26 @@ namespace HackerRank
 
    class Solution
    {
-      static void Main(string[] args)
-      {
-         StrangeGrid();
-//         Console.ReadLine();
-      }
-
-       public static void StrangeGrid()
+       static void Main(String[] args)
        {
-           var inputLine = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
-           var rowNo = inputLine[0];
-           var colNo = inputLine[1];
+           /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
+           TutorialIntro();
+       }
 
-           long retValue = 0;
+       public static void TutorialIntro()
+       {
+           var valueToFind = Convert.ToInt64(Console.ReadLine());
+           var numOfElements = Convert.ToInt64(Console.ReadLine());
+           var array = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
 
-           var tens = Convert.ToInt64(Math.Ceiling((double)rowNo/2)) - 1;
-           retValue = 10 * tens;
-           if (rowNo % 2 == 0)
+           for (int i = 0; i < numOfElements; i++)
            {
-               retValue = retValue + (colNo*2) - 1;
-               // even row so odd numbers
+               if (array[i] == valueToFind)
+               {
+                   Console.WriteLine(i);
+                   return;                   
+               }
            }
-           else
-           {
-               // odd row so even numbers
-               retValue = retValue + (colNo * 2) - 2;
-           }
-           Console.WriteLine(retValue);
        }
 
 

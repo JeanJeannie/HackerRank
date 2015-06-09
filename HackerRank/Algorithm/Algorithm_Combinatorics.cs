@@ -8,6 +8,31 @@ namespace HackerRank.Algorithm
 {
    class Algorithm_Combinatorics
    {
+       public static void StrangeGrid()
+       {
+           var inputLine = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
+           var rowNo = inputLine[0];
+           var colNo = inputLine[1];
+
+           long retValue = 0;
+
+           var tens = Convert.ToInt64(Math.Ceiling((double)rowNo / 2)) - 1;
+           retValue = 10 * tens;
+           if (rowNo % 2 == 0)
+           {
+               retValue = retValue + (colNo * 2) - 1;
+               // even row so odd numbers
+           }
+           else
+           {
+               // odd row so even numbers
+               retValue = retValue + (colNo * 2) - 2;
+           }
+           Console.WriteLine(retValue);
+       }
+
+
+
       public static void Socks(int numOfTestCases)
       {
          for (int i = 0; i < numOfTestCases; i++)
