@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using HackerRank.AlgorithmWarmUpEasy;
@@ -15,11 +16,38 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-          // InsertionSortPart1();
-           Console.ReadLine();
+           ModifiedFibonacci();
+           //Console.ReadLine();
        }
 
-    
+       public static void ModifiedFibonacci()
+       {
+           var inputLine = Console.ReadLine().Split(' ').ToArray();
+           var firstTerm = inputLine[0];
+           var secondTerm = inputLine[1];
+           var termToFind = Convert.ToInt32(inputLine[2]);
+
+           decimal term1;
+           decimal term2;
+
+           decimal.TryParse(firstTerm, out term1);
+           decimal.TryParse(secondTerm, out term2);
+
+           for (int i = 2; i < termToFind; i++)
+           {
+               var tempTerm = Fibo(term1, term2);
+               term1 = term2;
+               term2 = tempTerm;
+           }
+           Console.WriteLine(string.Format("{0:0}", term2));
+       }
+
+       public static decimal Fibo(decimal term1, decimal term2)
+       {
+           return (term2*term2) + term1;
+       }
+
+
 
 
        public static void MorganAndAString(int numOfTestCases)
