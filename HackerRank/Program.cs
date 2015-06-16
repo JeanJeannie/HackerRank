@@ -16,11 +16,33 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-        //   Staircase();
-           //Console.ReadLine();
+           TimeConversion();
+           Console.ReadLine();
        }
 
+       public static void TimeConversion()
+       {
+           var amPmTime = Console.ReadLine().Split(':').ToArray();
+           var pm = false;
 
+           var hour = Convert.ToInt32(amPmTime[0]);
+           var min = Convert.ToInt32(amPmTime[1]);
+           var secPart = amPmTime[2].ToCharArray();
+           var sec = Convert.ToInt32(amPmTime[2].Substring(0, 2));
+           if (secPart[2].ToString().ToUpper() == "P")
+           {
+               if (hour != 12)
+               {
+                   hour = (hour + 12) % 24;                   
+               }
+           }
+           else
+           {
+               if (hour == 12)
+                   hour = 0;
+           }
+           Console.WriteLine("{0:00}:{1:00}:{2:00}", hour, min, sec );
+       }
 
 
        public static void ModifiedFibonacci()
