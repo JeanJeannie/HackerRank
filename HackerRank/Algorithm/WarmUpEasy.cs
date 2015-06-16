@@ -8,6 +8,22 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+       public static void DiagonalDifference()
+       {
+           var matrixSize = Convert.ToInt32(Console.ReadLine());
+           var leftSum = 0;
+           var rightSum = 0;
+           for (int i = 0; i < matrixSize; i++)
+           {
+               var inputLine = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+               leftSum = leftSum + inputLine[i];
+               rightSum = rightSum + inputLine[matrixSize - i - 1];
+           }
+           Console.WriteLine(Math.Abs(leftSum - rightSum));
+
+       }
+
+
       public static void IsFibo(int numTestCases)
       {
          for (int i = 0; i < numTestCases; i++)
