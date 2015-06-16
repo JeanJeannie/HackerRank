@@ -8,6 +8,22 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+       public static void PlusMinus()
+       {
+           var totalNum = Convert.ToInt32(Console.ReadLine());
+           var arrayOfNum = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+
+           var totalZero = arrayOfNum.Where(w => w == 0).Count();
+           var totalPos = arrayOfNum.Where(w => w > 0).Count();
+           var totalNeg = arrayOfNum.Where(w => w < 0).Count();
+
+           Console.WriteLine(string.Format("{0:0.000}", Math.Round((double)totalPos / (double)totalNum, 3)));
+           Console.WriteLine(string.Format("{0:0.000}", Math.Round((double)totalNeg / (double)totalNum, 3)));
+           Console.WriteLine(string.Format("{0:0.000}", Math.Round((double)totalZero / (double)totalNum, 3)));
+
+       }
+
+
        public static void DiagonalDifference()
        {
            var matrixSize = Convert.ToInt32(Console.ReadLine());
