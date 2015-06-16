@@ -8,6 +8,25 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+       public static void Staircase()
+       {
+           var numOfSteps = Convert.ToInt32(Console.ReadLine());
+           for (int i = 0; i < numOfSteps; i++)
+           {
+               var spaces = numOfSteps - i - 1;
+               for (int j = 0; j < spaces; j++)
+               {
+                   Console.Write(' ');
+               }
+
+               for (int k = spaces; k < numOfSteps; k++)
+               {
+                   Console.Write('#');
+               }
+               Console.WriteLine();
+           }
+       }
+
        public static void PlusMinus()
        {
            var totalNum = Convert.ToInt32(Console.ReadLine());

@@ -16,11 +16,13 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-           //PlusMinus();
-          // Console.ReadLine();
+        //   Staircase();
+           //Console.ReadLine();
        }
 
-      
+
+
+
        public static void ModifiedFibonacci()
        {
            var inputLine = Console.ReadLine().Split(' ').ToArray();
