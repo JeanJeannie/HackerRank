@@ -16,34 +16,39 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-           TimeConversion();
+           LibraryFine();
            Console.ReadLine();
        }
 
-       public static void TimeConversion()
+       public static void LibraryFine()
        {
-           var amPmTime = Console.ReadLine().Split(':').ToArray();
-           var pm = false;
+          var actualReturn = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+          var expectedReturn = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
 
-           var hour = Convert.ToInt32(amPmTime[0]);
-           var min = Convert.ToInt32(amPmTime[1]);
-           var secPart = amPmTime[2].ToCharArray();
-           var sec = Convert.ToInt32(amPmTime[2].Substring(0, 2));
-           if (secPart[2].ToString().ToUpper() == "P")
-           {
-               if (hour != 12)
-               {
-                   hour = (hour + 12) % 24;                   
-               }
-           }
-           else
-           {
-               if (hour == 12)
-                   hour = 0;
-           }
-           Console.WriteLine("{0:00}:{1:00}:{2:00}", hour, min, sec );
+          var fine = 0;
+
+          // different year
+
+
+          if (actualReturn[2] > expectedReturn[2])
+          {
+             fine = 1000;
+          }
+          else {
+             if (actualReturn[1] > expectedReturn[1] && actualReturn[2] == expectedReturn[2])
+             {
+                fine = (actualReturn[1] - expectedReturn[1]) * 500;
+             }
+             else
+             {
+                if (actualReturn[0] > expectedReturn[0] && actualReturn[2] == expectedReturn[2] && actualReturn[1] == expectedReturn[1])
+                {
+                   fine = (actualReturn[0] - expectedReturn[0]) * 15;
+                }
+             }
+          }
+          Console.WriteLine(fine);
        }
-
 
        public static void ModifiedFibonacci()
        {
