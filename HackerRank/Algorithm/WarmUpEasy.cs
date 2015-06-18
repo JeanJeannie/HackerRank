@@ -8,6 +8,43 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+      public static void CaesarCipher()
+      {
+         var stringLen = Convert.ToInt32(Console.ReadLine());
+         var inputString = Console.ReadLine().ToCharArray();
+         var cipherNum = Convert.ToUInt64(Console.ReadLine()) % 26;
+         var outputString = new char[stringLen];
+         for (int charPos = 0; charPos < stringLen; charPos++)
+         {
+            var curChar = inputString[charPos];
+            if (curChar >= 'a' && curChar <= 'z')
+            {
+               var tempChar = (char)(Convert.ToUInt64(curChar) + cipherNum);
+               if (tempChar > 'z')
+               {
+                  tempChar = (char)(Convert.ToUInt64(tempChar) - Convert.ToUInt64(26));
+               }
+               outputString[charPos] = tempChar;
+            }
+            else
+            {
+               if (curChar >= 'A' && curChar <= 'Z')
+               {
+                  var tempChar = (char)(Convert.ToUInt64(curChar) + cipherNum);
+                  if (tempChar > 'Z')
+                  {
+                     tempChar = (char)(Convert.ToUInt64(tempChar) - Convert.ToUInt64(26));
+                  }
+                  outputString[charPos] = tempChar;
+               }
+               else
+                  outputString[charPos] = inputString[charPos];
+            }
+         }
+         Console.WriteLine(new string(outputString));
+      }
+
+
       public static void LibraryFine()
       {
          var actualReturn = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
