@@ -16,38 +16,44 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-           LibraryFine();
-           Console.ReadLine();
+           CaesarCipher();
+         //  Console.ReadLine();
        }
 
-       public static void LibraryFine()
+       public static void CaesarCipher()
        {
-          var actualReturn = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
-          var expectedReturn = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
-
-          var fine = 0;
-
-          // different year
-
-
-          if (actualReturn[2] > expectedReturn[2])
+          var stringLen = Convert.ToInt32( Console.ReadLine());
+          var inputString = Console.ReadLine().ToCharArray();
+          var cipherNum = Convert.ToUInt64(Console.ReadLine()) % 26;
+          var outputString = new char[stringLen];
+          for (int charPos = 0; charPos < stringLen; charPos++)
           {
-             fine = 1000;
-          }
-          else {
-             if (actualReturn[1] > expectedReturn[1] && actualReturn[2] == expectedReturn[2])
+             var curChar = inputString[charPos];
+             if (curChar >= 'a' && curChar <= 'z')
              {
-                fine = (actualReturn[1] - expectedReturn[1]) * 500;
+                var tempChar = (char)(Convert.ToUInt64(curChar) + cipherNum);
+                if (tempChar > 'z')
+                {
+                   tempChar = (char)(Convert.ToUInt64(tempChar) - Convert.ToUInt64(26));
+                }
+                outputString[charPos] = tempChar;
              }
              else
              {
-                if (actualReturn[0] > expectedReturn[0] && actualReturn[2] == expectedReturn[2] && actualReturn[1] == expectedReturn[1])
+                if (curChar >= 'A' && curChar <= 'Z')
                 {
-                   fine = (actualReturn[0] - expectedReturn[0]) * 15;
+                   var tempChar = (char)(Convert.ToUInt64(curChar) + cipherNum);
+                   if (tempChar > 'Z')
+                   {
+                      tempChar = (char)(Convert.ToUInt64(tempChar) - Convert.ToUInt64(26));
+                   }
+                   outputString[charPos] = tempChar;
                 }
+                else
+                   outputString[charPos] = inputString[charPos];
              }
           }
-          Console.WriteLine(fine);
+          Console.WriteLine(new string(outputString));
        }
 
        public static void ModifiedFibonacci()

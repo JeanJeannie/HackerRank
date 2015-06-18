@@ -8,10 +8,42 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+      public static void LibraryFine()
+      {
+         var actualReturn = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+         var expectedReturn = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+
+         var fine = 0;
+
+         // different year
+
+
+         if (actualReturn[2] > expectedReturn[2])
+         {
+            fine = 1000;
+         }
+         else
+         {
+            if (actualReturn[1] > expectedReturn[1] && actualReturn[2] == expectedReturn[2])
+            {
+               fine = (actualReturn[1] - expectedReturn[1]) * 500;
+            }
+            else
+            {
+               if (actualReturn[0] > expectedReturn[0] && actualReturn[2] == expectedReturn[2] && actualReturn[1] == expectedReturn[1])
+               {
+                  fine = (actualReturn[0] - expectedReturn[0]) * 15;
+               }
+            }
+         }
+         Console.WriteLine(fine);
+      }
+
+
       public static void TimeConversion()
       {
          var amPmTime = Console.ReadLine().Split(':').ToArray();
-         var pm = false;
+        // var pm = false;
 
          var hour = Convert.ToInt32(amPmTime[0]);
          var min = Convert.ToInt32(amPmTime[1]);
