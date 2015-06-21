@@ -3,6 +3,8 @@
 */obj/*
 *.suo
 
+*/HackerRank_UnitTests/*
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

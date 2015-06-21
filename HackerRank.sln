@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerRank", "HackerRank\HackerRank.csproj", "{CA7CC4C1-F991-4595-8818-38813031B896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerRank_UnitTests", "HackerRank_UnitTests\HackerRank_UnitTests.csproj", "{816344B3-51EB-4B5D-850C-726D5A292B6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CA7CC4C1-F991-4595-8818-38813031B896}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7CC4C1-F991-4595-8818-38813031B896}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7CC4C1-F991-4595-8818-38813031B896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{816344B3-51EB-4B5D-850C-726D5A292B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{816344B3-51EB-4B5D-850C-726D5A292B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{816344B3-51EB-4B5D-850C-726D5A292B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{816344B3-51EB-4B5D-850C-726D5A292B6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

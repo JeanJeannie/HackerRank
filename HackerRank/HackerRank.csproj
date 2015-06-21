@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\Algorithm_RegEx.cs" />
     <Compile Include="Algorithm\Algorithm_Sorting.cs" />
     <Compile Include="Algorithm\Algorithm_Strings.cs" />
     <Compile Include="Algorithm\Algorithm_Combinatorics.cs" />
