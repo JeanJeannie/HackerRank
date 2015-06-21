@@ -9,6 +9,22 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_RegEx
    {
+      public static void HackerRankTweets(int numOfTestCases)
+      {
+         var reg = new Regex(@".*[Hh][Aa][Cc][Kk][Ee][Rr][Rr][Aa][Nn][Kk].*");
+         var tweetCount = 0;
+         for (int testCase = 0; testCase < numOfTestCases; testCase++)
+         {
+            var inputString = Console.ReadLine();
+            if (reg.IsMatch(inputString))
+            {
+               tweetCount++;
+            }
+         }
+         Console.WriteLine(tweetCount);
+      }
+
+
       public static void PANNumber(int numOfTestCases)
       {
          var regEx = new Regex(@"[A-Z]{5}\d{4}[A-Z]{1}");
