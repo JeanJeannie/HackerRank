@@ -17,12 +17,41 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-     //     HackerRankTweets(Convert.ToInt32(Console.ReadLine()));
-//          Console.ReadLine();
-
-
+          FindHackerRank(Convert.ToInt32(Console.ReadLine()));
+          //Console.ReadLine();
        }
 
+       public static void FindHackerRank(int numOfTestCases)
+       {
+           var regEntire = new Regex(@"^hackerrank$");
+           var regEnd = new Regex(@"^.+hackerrank$");
+           var regStart = new Regex(@"^hackerrank.+$");
+
+           for (int testNum = 0; testNum < numOfTestCases; testNum++)
+           {
+               var inputString = Console.ReadLine();
+               if (regEntire.IsMatch(inputString))
+               {
+                   Console.WriteLine(0);
+                   continue;
+               }
+
+               if (regStart.IsMatch(inputString))
+               {
+                   Console.WriteLine(1);
+                   continue;
+               }
+
+               if (regEnd.IsMatch(inputString))
+               {
+                   Console.WriteLine(2);
+                   continue;
+               }
+
+               Console.WriteLine(-1);
+
+           }
+       }
 
 
        public static void FlippingBits()
