@@ -17,45 +17,107 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-          Encryption();
-          Console.ReadLine();
+          FraudPrevention(Convert.ToInt32(Console.ReadLine()));
+         // Console.ReadLine();
        }
 
-      // have a nice day
-      // haveaniceday
-      // 3 rows 4 cols
-      // hae
-      // and
-      // via
-      // ecy
-      // 1,5,9
-      // 2,6,10
-      // 3,7,11
-      // 4,8,12
-
-       public static void Encryption()
+       public static void FraudPrevention(int numOfRecords)
        {
-          var inputText = Console.ReadLine().Replace(" ", string.Empty).ToCharArray();
-          var charCount = inputText.Length;
-          var rows = (int)Math.Ceiling( Math.Sqrt(charCount));
-          var columns = (int)Math.Floor(Math.Sqrt(charCount));
-
-          if (rows * columns < charCount)
-             columns++;
-
-          for (int i = 0; i < rows; i++)
+          var records = new List<GroupOnRecord>();
+          for (int recordNum = 0; recordNum < numOfRecords; recordNum++)
           {
-             for (int j = 0; j < columns; j++)
-             {
-                var currPos = (rows * j) + i;
-                if (currPos < charCount)
+             records.Add(new GroupOnRecord(Console.ReadLine()));
+          }
+
+          var fraudRecords = new List<long>();
+          var recArray = records.ToArray();
+          for (int i = 0; i < recArray.Length-1; i++)
+          {
+             var currRecord = recArray[i];
+             //if (fraudRecords.Contains(currRecord.DealId))
+               // continue;
+
+             for (int j = i+1; j < recArray.Length; j++)
+             {                
+                if (GroupOnRecord.Fraudulent(currRecord, recArray[j]))
                 {
-                   var currChar = inputText[currPos];
-                   Console.Write(currChar.ToString());
+                   if (!fraudRecords.Contains(currRecord.OrderId))
+                      fraudRecords.Add(currRecord.OrderId);
+
+                   if (!fraudRecords.Contains(recArray[j].OrderId))
+                      fraudRecords.Add(recArray[j].OrderId);
                 }
              }
-             if (i < (rows-1))
-                Console.Write(' ');
+          }
+
+          Console.WriteLine(string.Join(",", fraudRecords.OrderBy(s => s).ToArray()));       
+       }
+
+       public class GroupOnRecord
+       {
+          public long OrderId { get; set; }
+          public long DealId { get; set; }
+          public string EmailAddress { get; set; }
+          public string StreetAddress { get; set; }
+          public string City { get; set; }
+          public string State { get; set; }
+          public string ZipCode { get; set; }
+          public string CreditCard { get; set; }
+
+          public GroupOnRecord(string record)
+          {
+             var tempArray = record.Split(',').ToArray();
+
+             OrderId = Convert.ToInt64(tempArray[0]);
+             
+             DealId = Convert.ToInt64(tempArray[1]);
+             
+             var tempEmail = tempArray[2].ToLower().Split('@');
+             var frontEmailPart = tempEmail[0].Replace(".", string.Empty);
+             frontEmailPart = frontEmailPart.Split('+')[0];
+             EmailAddress = string.Format("{0}@{1}", frontEmailPart, tempEmail[1]);
+
+             StreetAddress = tempArray[3].ToLower().Replace("st.", "street").Replace("rd.", "road");
+
+             City = tempArray[4].ToLower();
+
+             State = tempArray[5].ToLower();
+             switch (State)
+         	   {
+                case "il":
+                   State = "illinois";
+                   break;
+                case "ca":
+                   State = "california";
+                   break;
+                case "ny":
+                   State = "new york";
+                   break;
+		         default:
+                  break;
+	            }
+
+             ZipCode = tempArray[6].Replace("-",string.Empty);
+
+             CreditCard = tempArray[7];
+          }
+
+          public static bool Fraudulent(GroupOnRecord recordOne, GroupOnRecord recordTwo)
+          {
+             if (recordOne.DealId == recordTwo.DealId 
+                && recordOne.EmailAddress == recordTwo.EmailAddress
+                && recordOne.CreditCard != recordTwo.CreditCard)
+                return true;
+
+             if (recordOne.DealId == recordTwo.DealId
+                && recordOne.StreetAddress == recordTwo.StreetAddress
+                && recordOne.City == recordTwo.City
+                && recordOne.State == recordTwo.State
+                && recordOne.ZipCode == recordTwo.ZipCode
+                && recordOne.CreditCard != recordTwo.CreditCard)
+                return true;
+
+             return false;
           }
        }
 
