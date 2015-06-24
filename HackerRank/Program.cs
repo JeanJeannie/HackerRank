@@ -8,7 +8,6 @@ using HackerRank.AlgorithmWarmUpEasy;
 
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Numerics;
 
 namespace HackerRank
 {
@@ -18,19 +17,46 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-          ExtraLongFactorials();
-          //Console.ReadLine();
+          Encryption();
+          Console.ReadLine();
        }
 
-       public static void ExtraLongFactorials()
+      // have a nice day
+      // haveaniceday
+      // 3 rows 4 cols
+      // hae
+      // and
+      // via
+      // ecy
+      // 1,5,9
+      // 2,6,10
+      // 3,7,11
+      // 4,8,12
+
+       public static void Encryption()
        {
-          var inputNum = Convert.ToInt32(Console.ReadLine());
-          BigInteger sum = 1;
-          for (int num = inputNum; num > 0; num--)
+          var inputText = Console.ReadLine().Replace(" ", string.Empty).ToCharArray();
+          var charCount = inputText.Length;
+          var rows = (int)Math.Ceiling( Math.Sqrt(charCount));
+          var columns = (int)Math.Floor(Math.Sqrt(charCount));
+
+          if (rows * columns < charCount)
+             columns++;
+
+          for (int i = 0; i < rows; i++)
           {
-             sum = sum * (BigInteger)num;
+             for (int j = 0; j < columns; j++)
+             {
+                var currPos = (rows * j) + i;
+                if (currPos < charCount)
+                {
+                   var currChar = inputText[currPos];
+                   Console.Write(currChar.ToString());
+                }
+             }
+             if (i < (rows-1))
+                Console.Write(' ');
           }
-          Console.WriteLine(sum);
        }
 
        public static void FlippingBits()

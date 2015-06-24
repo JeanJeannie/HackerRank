@@ -3,11 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+      public static void ExtraLongFactorials()
+      {
+         var inputNum = Convert.ToInt32(Console.ReadLine());
+         BigInteger sum = 1;
+         for (int num = inputNum; num > 0; num--)
+         {
+            sum = sum * (BigInteger)num;
+         }
+         Console.WriteLine(sum);
+      }
+
+
       public static void AVeryBigSum()
       {
          var numOfElements = Convert.ToInt32(Console.ReadLine());
