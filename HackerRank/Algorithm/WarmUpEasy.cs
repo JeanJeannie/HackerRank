@@ -8,6 +8,19 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+      public static void AVeryBigSum()
+      {
+         var numOfElements = Convert.ToInt32(Console.ReadLine());
+         long sumOfElements = 0;
+         var arrayElements = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
+         for (int elementNum = 0; elementNum < numOfElements; elementNum++)
+         {
+            sumOfElements = sumOfElements + arrayElements[elementNum];
+         }
+         Console.WriteLine(sumOfElements);
+      }
+
+
       public static void CaesarCipher()
       {
          var stringLen = Convert.ToInt32(Console.ReadLine());

@@ -8,6 +8,7 @@ using HackerRank.AlgorithmWarmUpEasy;
 
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Numerics;
 
 namespace HackerRank
 {
@@ -17,20 +18,19 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-          AVeryBigSum();
+          ExtraLongFactorials();
           //Console.ReadLine();
        }
 
-       public static void AVeryBigSum()
+       public static void ExtraLongFactorials()
        {
-          var numOfElements = Convert.ToInt32(Console.ReadLine());
-          long sumOfElements = 0;
-          var arrayElements = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
-          for (int elementNum = 0; elementNum < numOfElements; elementNum++)
+          var inputNum = Convert.ToInt32(Console.ReadLine());
+          BigInteger sum = 1;
+          for (int num = inputNum; num > 0; num--)
           {
-             sumOfElements = sumOfElements + arrayElements[elementNum];
+             sum = sum * (BigInteger)num;
           }
-          Console.WriteLine(sumOfElements);
+          Console.WriteLine(sum);
        }
 
        public static void FlippingBits()
