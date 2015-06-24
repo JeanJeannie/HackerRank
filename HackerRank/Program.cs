@@ -17,11 +17,21 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-//          FindHackerRank(Convert.ToInt32(Console.ReadLine()));
+          AVeryBigSum();
           //Console.ReadLine();
        }
 
-
+       public static void AVeryBigSum()
+       {
+          var numOfElements = Convert.ToInt32(Console.ReadLine());
+          long sumOfElements = 0;
+          var arrayElements = Console.ReadLine().Split(' ').Select(s => Convert.ToInt64(s)).ToArray();
+          for (int elementNum = 0; elementNum < numOfElements; elementNum++)
+          {
+             sumOfElements = sumOfElements + arrayElements[elementNum];
+          }
+          Console.WriteLine(sumOfElements);
+       }
 
        public static void FlippingBits()
        {
