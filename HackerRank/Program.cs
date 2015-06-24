@@ -17,12 +17,23 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-     //     HackerRankTweets(Convert.ToInt32(Console.ReadLine()));
-//          Console.ReadLine();
+          SplitThePhoneNumber(Convert.ToInt32(Console.ReadLine()));
+        //  Console.ReadLine();
 
 
        }
 
+       public static void SplitThePhoneNumber(int numOfTestCases)
+       {
+          var regEx = new Regex(@"^(\d{1,3})[\-\s]{1}(\d{1,3})[\-\s]{1}(\d{4,10})$");
+          for (int testCase = 0; testCase < numOfTestCases; testCase++)
+          {
+             var inputString = Console.ReadLine();
+             var regExMatch = regEx.Match(inputString);
+             Console.WriteLine("CountryCode={0},LocalAreaCode={1},Number={2}", regExMatch.Groups[1], regExMatch.Groups[2], regExMatch.Groups[3]);
+          }
+
+       }
 
 
        public static void FlippingBits()
