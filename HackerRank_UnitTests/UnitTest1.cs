@@ -1,12 +1,38 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
+using System.Text;
+using HackerRank;
 
 namespace HackerRank_UnitTests
 {
    [TestClass]
    public class UnitTest1
    {
+      [TestMethod]
+      public void CheckPos()
+      {
+         int totalRow = 4;
+         int totalCol = 4;
+         var numOfBoxes = totalCol <= totalRow ? totalCol / 2 : totalRow / 2;
+
+
+//         string[,] result = new string[totalRow, totalCol];
+         for (int i = 0; i < totalRow; i++)
+         {
+            for (int j = 0; j < totalCol; j++)
+            {
+               Console.Write(HackerRank.Solution.CellPos(i, j, totalRow, totalCol, numOfBoxes));
+               Console.WriteLine(":");
+            }
+            Console.WriteLine();
+         }
+         
+         
+         Assert.AreEqual("LT", "RT");
+      }
+
+
       [TestMethod]
       public void TestingRegEx()
       {
