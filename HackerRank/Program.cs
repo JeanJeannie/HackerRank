@@ -17,109 +17,85 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-          FraudPrevention(Convert.ToInt32(Console.ReadLine()));
+          TheGridSearch(Convert.ToInt32(Console.ReadLine()));
          // Console.ReadLine();
        }
 
-       public static void FraudPrevention(int numOfRecords)
+       public static void TheGridSearch(int numOfTestCases)
        {
-          var records = new List<GroupOnRecord>();
-          for (int recordNum = 0; recordNum < numOfRecords; recordNum++)
+          for (int testNum = 0; testNum < numOfTestCases; testNum++)
           {
-             records.Add(new GroupOnRecord(Console.ReadLine()));
+             var firstGridInput = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+      
+             var largerArray = GetGrid(firstGridInput[0], firstGridInput[1]).ToArray();
+
+             var secondGridInput = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+
+             var smallerArray = GetGrid(secondGridInput[0], secondGridInput[1]).ToArray();
+
+             if (DoesContainSmallerArray(largerArray, smallerArray, firstGridInput[1]))
+                Console.WriteLine("YES");
+             else
+                Console.WriteLine("NO");
+
           }
+       }
 
-          var fraudRecords = new List<long>();
-          var recArray = records.ToArray();
-          for (int i = 0; i < recArray.Length-1; i++)
+       public static bool DoesContainSmallerArray(string[] largeArray, string[] smallArray, int largeColMax)
+       {
+          int smallRow = 0;          
+          int smallRowMax = smallArray.Length-1;
+          int largeRowMax = largeArray.Length-1;
+            var smallString = smallArray[smallRow];
+            // read through the large Array until we find a match
+            for (int largeRow = 0; largeRow <= largeRowMax; largeRow++)
+            {
+               int largeCol = 0;
+               while (largeCol < largeColMax)
+               {
+                  var wordPos = largeArray[largeRow].IndexOf(smallString, largeCol);
+                  // if the rest of the array matches with the small array then return true;
+                  if (wordPos < 0)
+                     break;
+
+                  if (wordPos >= 0 && SearchRestOfGrid(largeArray, smallArray, wordPos, largeRow))
+                  {
+                     return true;
+                  }
+
+                  if (wordPos >= 0)  // check further along the line
+                  {
+                     largeCol = wordPos + 1;
+                  }
+               }                
+            }
+          return false;
+       }
+
+       public static bool SearchRestOfGrid(string[] largerArray, string[] smallerArray, int largeCol, int largeRow)
+       { 
+         // we've already matched the first row of the smaller array in the larger array at pos (largeRow, largeCol)
+          for (int i = 1; i < smallerArray.Length; i++)
           {
-             var currRecord = recArray[i];
-             //if (fraudRecords.Contains(currRecord.DealId))
-               // continue;
-
-             for (int j = i+1; j < recArray.Length; j++)
-             {                
-                if (GroupOnRecord.Fraudulent(currRecord, recArray[j]))
-                {
-                   if (!fraudRecords.Contains(currRecord.OrderId))
-                      fraudRecords.Add(currRecord.OrderId);
-
-                   if (!fraudRecords.Contains(recArray[j].OrderId))
-                      fraudRecords.Add(recArray[j].OrderId);
-                }
+             // if we've searched past the end of the larger array of the string at the same position doesn't match the smaller array
+             if (largeRow+i == largerArray.Length || largerArray[largeRow + i].Substring(largeCol, smallerArray[i].Length) != smallerArray[i])
+             {
+                return false;
              }
           }
-
-          Console.WriteLine(string.Join(",", fraudRecords.OrderBy(s => s).ToArray()));       
+          return true;
        }
 
-       public class GroupOnRecord
-       {
-          public long OrderId { get; set; }
-          public long DealId { get; set; }
-          public string EmailAddress { get; set; }
-          public string StreetAddress { get; set; }
-          public string City { get; set; }
-          public string State { get; set; }
-          public string ZipCode { get; set; }
-          public string CreditCard { get; set; }
-
-          public GroupOnRecord(string record)
+      public static IEnumerable<string> GetGrid(int row, int col)
+       { 
+          var retArray = new List<string>();
+          for (int lineNo = 0; lineNo < row; lineNo++)
           {
-             var tempArray = record.Split(',').ToArray();
-
-             OrderId = Convert.ToInt64(tempArray[0]);
-             
-             DealId = Convert.ToInt64(tempArray[1]);
-             
-             var tempEmail = tempArray[2].ToLower().Split('@');
-             var frontEmailPart = tempEmail[0].Replace(".", string.Empty);
-             frontEmailPart = frontEmailPart.Split('+')[0];
-             EmailAddress = string.Format("{0}@{1}", frontEmailPart, tempEmail[1]);
-
-             StreetAddress = tempArray[3].ToLower().Replace("st.", "street").Replace("rd.", "road");
-
-             City = tempArray[4].ToLower();
-
-             State = tempArray[5].ToLower();
-             switch (State)
-         	   {
-                case "il":
-                   State = "illinois";
-                   break;
-                case "ca":
-                   State = "california";
-                   break;
-                case "ny":
-                   State = "new york";
-                   break;
-		         default:
-                  break;
-	            }
-
-             ZipCode = tempArray[6].Replace("-",string.Empty);
-
-             CreditCard = tempArray[7];
+             retArray.Add(Console.ReadLine());
           }
-
-          public static bool Fraudulent(GroupOnRecord recordOne, GroupOnRecord recordTwo)
-          {
-             if (recordOne.DealId == recordTwo.DealId 
-                && recordOne.EmailAddress == recordTwo.EmailAddress
-                && recordOne.CreditCard != recordTwo.CreditCard)
-                return true;
-
-             if (recordOne.DealId == recordTwo.DealId
-                && recordOne.StreetAddress == recordTwo.StreetAddress
-                && recordOne.City == recordTwo.City
-                && recordOne.State == recordTwo.State
-                && recordOne.ZipCode == recordTwo.ZipCode
-                && recordOne.CreditCard != recordTwo.CreditCard)
-                return true;
-
-             return false;
-          }
+          return retArray;
        }
+
 
        public static void FlippingBits()
        {

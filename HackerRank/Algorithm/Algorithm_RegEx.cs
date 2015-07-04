@@ -1,10 +1,114 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace HackerRank.Algorithm
 {
    public class Algorithm_RegEx
    {
+      public static void FraudPrevention(int numOfRecords)
+      {
+         var records = new List<GroupOnRecord>();
+         for (int recordNum = 0; recordNum < numOfRecords; recordNum++)
+         {
+            records.Add(new GroupOnRecord(Console.ReadLine()));
+         }
+
+         var fraudRecords = new List<long>();
+         var recArray = records.ToArray();
+         for (int i = 0; i < recArray.Length - 1; i++)
+         {
+            var currRecord = recArray[i];
+            //if (fraudRecords.Contains(currRecord.DealId))
+            // continue;
+
+            for (int j = i + 1; j < recArray.Length; j++)
+            {
+               if (GroupOnRecord.Fraudulent(currRecord, recArray[j]))
+               {
+                  if (!fraudRecords.Contains(currRecord.OrderId))
+                     fraudRecords.Add(currRecord.OrderId);
+
+                  if (!fraudRecords.Contains(recArray[j].OrderId))
+                     fraudRecords.Add(recArray[j].OrderId);
+               }
+            }
+         }
+
+         Console.WriteLine(string.Join(",", fraudRecords.OrderBy(s => s).ToArray()));
+      }
+
+      public class GroupOnRecord
+      {
+         public long OrderId { get; set; }
+         public long DealId { get; set; }
+         public string EmailAddress { get; set; }
+         public string StreetAddress { get; set; }
+         public string City { get; set; }
+         public string State { get; set; }
+         public string ZipCode { get; set; }
+         public string CreditCard { get; set; }
+
+         public GroupOnRecord(string record)
+         {
+            var tempArray = record.Split(',').ToArray();
+
+            OrderId = Convert.ToInt64(tempArray[0]);
+
+            DealId = Convert.ToInt64(tempArray[1]);
+
+            var tempEmail = tempArray[2].ToLower().Split('@');
+            var frontEmailPart = tempEmail[0].Replace(".", string.Empty);
+            frontEmailPart = frontEmailPart.Split('+')[0];
+            EmailAddress = string.Format("{0}@{1}", frontEmailPart, tempEmail[1]);
+
+            StreetAddress = tempArray[3].ToLower().Replace("st.", "street").Replace("rd.", "road");
+
+            City = tempArray[4].ToLower();
+
+            State = tempArray[5].ToLower();
+            switch (State)
+            {
+               case "il":
+                  State = "illinois";
+                  break;
+               case "ca":
+                  State = "california";
+                  break;
+               case "ny":
+                  State = "new york";
+                  break;
+               default:
+                  break;
+            }
+
+            ZipCode = tempArray[6].Replace("-", string.Empty);
+
+            CreditCard = tempArray[7];
+         }
+
+         public static bool Fraudulent(GroupOnRecord recordOne, GroupOnRecord recordTwo)
+         {
+            if (recordOne.DealId == recordTwo.DealId
+               && recordOne.EmailAddress == recordTwo.EmailAddress
+               && recordOne.CreditCard != recordTwo.CreditCard)
+               return true;
+
+            if (recordOne.DealId == recordTwo.DealId
+               && recordOne.StreetAddress == recordTwo.StreetAddress
+               && recordOne.City == recordTwo.City
+               && recordOne.State == recordTwo.State
+               && recordOne.ZipCode == recordTwo.ZipCode
+               && recordOne.CreditCard != recordTwo.CreditCard)
+               return true;
+
+            return false;
+         }
+      }
+
+
+
       public static void FindHackerRank(int numOfTestCases)
       {
          var regEntire = new Regex(@"^hackerrank$");
