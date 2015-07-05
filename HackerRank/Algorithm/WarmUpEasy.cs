@@ -9,17 +9,345 @@ namespace HackerRank.AlgorithmWarmUpEasy
 {
    public class WarmUpEasy
    {
+      public static void MatrixRotation()
+      {
+         var firstInput = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
+         var row = firstInput[0];
+         var col = firstInput[1];
+         var rotationNum = firstInput[2];
+         //  var totalRotation = (2 * col) + (2 * row) - 4;
+         //rotationNum = rotationNum % totalRotation;
+         var numOfBoxes = col <= row ? col / 2 : row / 2;
+
+         var origMatrix = GetGrid(row, col);
+         var tempMatrix = origMatrix;
+
+         RotateMatrixMoreThanOnce(tempMatrix, row, col, numOfBoxes, rotationNum);
+      }
+
+      public static void RotateMatrixMoreThanOnce(string[,] origMatrix, int totalRows, int totalCols, int numOfBoxes, int rotationNum)
+      {
+         var boxList = GetStringsPerBox(origMatrix, totalRows, totalCols, numOfBoxes);
+
+         var retList = new List<string[]>();
+         foreach (var boxItems in boxList)
+         {
+            var boxItemCount = boxItems.Length;
+            var actualRotation = rotationNum; // % boxItemCount;
+            //             if (actualRotation == 0)
+            //             { 
+            // do nothing as will rotate around to where it began
+            ///                retList.Add(boxItems);
+            //               continue;
+            //           }
+
+            // need to shuffle items along by the actual rotation num.  if == 1 then [0] = [1], [1] = [2] etc.  If == 2 then [0] = [2], [1] = [3]
+            string[] rotatedItems = new string[boxItemCount];
+            for (int itemCount = 0; itemCount < boxItemCount; itemCount++)
+            {
+               rotatedItems[itemCount] = boxItems[(itemCount + actualRotation) % boxItemCount];
+            }
+            Console.WriteLine(string.Join(":", rotatedItems));
+            retList.Add(rotatedItems);
+         }
+
+         var recreatedMatrix = RecreateMatrix(retList, totalRows, totalCols);
+         PrintMatrix(recreatedMatrix);
+      }
+
+      public static void PrintMatrix(string[,] matrix)
+      {
+         for (int x = 0; x <= matrix.GetUpperBound(0); x++)
+         {
+            for (int y = 0; y <= matrix.GetUpperBound(1); y++)
+            {
+               Console.Write(matrix[x, y]);
+               if (y < matrix.GetUpperBound(1))
+                  Console.Write(' ');
+               else
+                  Console.WriteLine();
+            }
+         }
+      }
+
+      public static string[,] GetGrid(int row, int col)
+      {
+         var retArray = new string[row, col];
+         for (int lineNo = 0; lineNo < row; lineNo++)
+         {
+            var stringArray = Console.ReadLine().Split(' ').ToArray();
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+               retArray[lineNo, i] = stringArray[i];
+            }
+         }
+         return retArray;
+      }
+
+
+      public static string[,] RecreateMatrix(List<string[]> rotatedItems, int totalRows, int totalCols)
+      {
+         string[,] retMatrix = new string[totalRows, totalCols];
+         int boxCount = 0;
+         foreach (var boxItems in rotatedItems)
+         {
+            // box will be (totalCols- 2*boxCount X totalRows - 2*boxCount)
+            // this means the top row is the first (totalCols-2*boxCount) items
+            // the right col will be items between (totalCols-2*boxCount) and (totalCols-1*boxCount) + (totalRows- 2*BoxCount)-2)
+            // first item will be in boxCount 0
+            //int bRow = boxCount;
+            //int bCol = boxCount;
+
+            int maxTopRowItems = totalCols - 2 * boxCount;
+            int maxRightColItems = maxTopRowItems + (totalRows - 2 * boxCount) - 2;
+            int maxBottomRowItems = maxRightColItems + (totalCols - 2 * boxCount);
+            // int maxLeftColItmes = (totalCols - 2 * boxCount) + (totalRows - 2 * boxCount) - 4;
+
+            int topRow = boxCount;
+            int bottomRow = totalRows - boxCount - 1;
+            int leftCol = boxCount;
+            int rightCol = totalCols - boxCount - 1;
+
+            int bottomCol = rightCol;
+            int topCol = boxCount;
+            int leftRow = bottomRow - 1;
+            int rightRow = topRow + 1;
+            for (int i = 0; i < boxItems.Length; i++)
+            {
+               // top row
+               if (i < maxTopRowItems)
+               {
+                  retMatrix[topRow, topCol] = boxItems[i];
+                  topCol++;
+                  continue;
+               }
+               // right col
+               if (i >= maxTopRowItems && i < maxRightColItems)
+               {
+                  //bCol = totalCols - boxCount - 1;  // last col  // should already be on the last col
+                  retMatrix[rightRow, rightCol] = boxItems[i];
+                  rightRow++;
+                  continue;
+               }
+               // bottom row
+               if (i >= maxRightColItems && i < maxBottomRowItems)
+               {
+                  retMatrix[bottomRow, bottomCol] = boxItems[i];
+                  bottomCol--;
+                  continue;
+               }
+               // left col
+               retMatrix[leftRow, leftCol] = boxItems[i];
+               leftRow--;
+            }
+
+            boxCount++;
+         }
+         return retMatrix;
+      }
+
+      public static List<string[]> GetStringsPerBox(string[,] origMatrix, int totalRows, int totalCols, int numOfBoxes)
+      {
+         var retList = new List<string[]>();
+         for (int boxCount = 0; boxCount < numOfBoxes; boxCount++)
+         {
+            // need to extract the string bits that make up the outside of the first box
+            // the first box will be row x count => (2 x row) + (2 x col) - 4 boxes.
+            // the second box will be row-2 x count-2 => (
+            //var boxLen = (2 * (totalRows - 2*boxCount)) + (2 * (totalCols - 2*boxCount)) - 4;  // box contains this many cells
+            var boxStrings = new List<string>(); //[boxLen, 1];
+            var boxTopRow = new Dictionary<int, string>();
+            var boxLeftCol = new Dictionary<int, string>();
+            var boxRightCol = new Dictionary<int, string>();
+            var boxBottomRow = new Dictionary<int, string>();
+            // top row will be [0,0] - [0,5]  or [1,1] - [1,4]
+            int colCount = 0;
+            for (int bRow = boxCount; bRow < totalRows - boxCount; bRow++)
+            {
+               if (bRow == boxCount) // || bRow == boxRows-1)
+               {
+                  int pos = 0;
+                  for (int bCol = boxCount; bCol < totalCols - boxCount; bCol++)
+                  {
+                     boxTopRow.Add(pos, origMatrix[bRow, bCol]);
+                     pos++;
+                  }
+                  continue;
+               }
+
+               // bottom row in reverse
+               if (bRow == totalRows - boxCount - 1)
+               {
+                  int pos = 0;
+                  for (int bCol = boxCount; bCol < totalCols - boxCount; bCol++)
+                  {
+                     boxBottomRow.Add(pos, origMatrix[bRow, bCol]);
+                     pos++;
+                  }
+                  continue;
+               }
+
+               boxLeftCol.Add(colCount, origMatrix[bRow, boxCount]);
+               boxRightCol.Add(colCount, origMatrix[bRow, totalCols - 1 - boxCount]);
+               colCount++;
+            }
+            boxStrings.AddRange(boxTopRow.OrderBy(o => o.Key).Select(s => s.Value).ToList());
+            boxStrings.AddRange(boxRightCol.OrderBy(o => o.Key).Select(s => s.Value).ToList());
+            boxStrings.AddRange(boxBottomRow.OrderByDescending(o => o.Key).Select(s => s.Value).ToList());
+            boxStrings.AddRange(boxLeftCol.OrderByDescending(o => o.Key).Select(s => s.Value).ToList());
+            Console.WriteLine(string.Join(":", boxStrings.ToArray()));
+            retList.Add(boxStrings.ToArray());
+         }
+
+         return retList;
+      }
+
+
+
+      public static bool IsInLeftCol(int row, int col, int totalRows, int totalCols, int numOfBoxes)
+      {
+         if (col < numOfBoxes
+            && row >= col
+            && row < (totalRows - col))
+            return true;
+
+         return false;
+      }
+
+      public static bool IsInRightCol(int row, int col, int totalRows, int totalCols, int numOfBoxes)
+      {
+         if (col >= (totalCols - numOfBoxes) // right col
+            && row >= (totalCols - 1 - col)  // but needs to be between this row
+            && row < totalRows - (totalCols - 1 - col))  // and this row
+            return true;
+
+         return false;
+      }
+
+      public static bool IsInTopRow(int row, int col, int totalRows, int totalCols, int numOfBoxes)
+      {
+         if (row < numOfBoxes // top row
+            && col >= row  // but between these columns 
+            && col < totalCols - row)
+            return true;
+
+         return false;
+      }
+
+      public static bool IsInBottomRow(int row, int col, int totalRows, int totalCols, int numOfBoxes)
+      {
+         if (row >= (totalRows - numOfBoxes)
+            && col >= (totalRows - 1 - row)  // but between these columns 
+            && col < totalCols - (totalRows - 1 - row))
+            return true;
+
+         return false;
+      }
+
+
+      public static string[,] RotateMatrixOnce(string[,] origMatrix, int numOfRows, int numOfCols, int numOfBoxes, bool lastRotation = false)
+      {
+         var retMatrix = new string[numOfRows, numOfCols];
+         for (int i = 0; i < numOfRows; i++)
+         {
+            for (int j = 0; j < numOfCols; j++)
+            {
+               var isLeft = IsInLeftCol(i, j, numOfRows, numOfCols, numOfBoxes);
+               var isTop = IsInTopRow(i, j, numOfRows, numOfCols, numOfBoxes);
+               if (isLeft && !isTop)
+               {
+                  retMatrix[i, j] = origMatrix[i - 1, j];  // one above
+                  if (lastRotation)
+                  {
+                     Console.Write(retMatrix[i, j]);
+                     if (j == numOfCols - 1)
+                        Console.WriteLine();
+                     else
+                        Console.Write(' ');
+                  }
+                  continue;
+               }
+               var isRight = IsInRightCol(i, j, numOfRows, numOfCols, numOfBoxes);
+               if (isTop && !isRight)
+               {
+                  retMatrix[i, j] = origMatrix[i, j + 1];
+                  if (lastRotation)
+                  {
+                     Console.Write(retMatrix[i, j]);
+                     if (j == numOfCols - 1)
+                        Console.WriteLine();
+                     else
+                        Console.Write(' ');
+                  }
+                  continue;
+               }
+               var isBottom = IsInBottomRow(i, j, numOfRows, numOfCols, numOfBoxes);
+
+               if (isRight && !isBottom)
+               {
+                  retMatrix[i, j] = origMatrix[i + 1, j];
+                  if (lastRotation)
+                  {
+                     Console.Write(retMatrix[i, j]);
+                     if (j == numOfCols - 1)
+                        Console.WriteLine();
+                     else
+                        Console.Write(' ');
+                  }
+                  continue;
+               }
+
+               if (isBottom && !isLeft)
+               {
+                  retMatrix[i, j] = origMatrix[i, j - 1];
+                  if (lastRotation)
+                  {
+                     Console.Write(retMatrix[i, j]);
+                     if (j == numOfCols - 1)
+                        Console.WriteLine();
+                     else
+                        Console.Write(' ');
+
+                  }
+               }
+            }
+         }
+         return retMatrix;
+      }
+
+
+      public static string CellPos(int row, int col, int totalRows, int totalCols, int numOfBoxes)
+      {
+         var posText = new StringBuilder();
+         if (IsInLeftCol(row, col, totalRows, totalCols, numOfBoxes))
+            posText.Append("L");
+
+         if (IsInRightCol(row, col, totalRows, totalCols, numOfBoxes))
+            posText.Append("R");
+
+         if (IsInTopRow(row, col, totalRows, totalCols, numOfBoxes))
+            posText.Append("T");
+
+         if (IsInBottomRow(row, col, totalRows, totalCols, numOfBoxes))
+            posText.Append("B");
+
+         return posText.ToString();
+      }
+
+
+
+
       public static void TheGridSearch(int numOfTestCases)
       {
          for (int testNum = 0; testNum < numOfTestCases; testNum++)
          {
             var firstGridInput = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
 
-            var largerArray = GetGrid(firstGridInput[0], firstGridInput[1]).ToArray();
+            var largerArray = GetGrid2(firstGridInput[0], firstGridInput[1]).ToArray();
 
             var secondGridInput = Console.ReadLine().Split(' ').Select(s => Convert.ToInt32(s)).ToArray();
 
-            var smallerArray = GetGrid(secondGridInput[0], secondGridInput[1]).ToArray();
+            var smallerArray = GetGrid2(secondGridInput[0], secondGridInput[1]).ToArray();
 
             if (DoesContainSmallerArray(largerArray, smallerArray, firstGridInput[1]))
                Console.WriteLine("YES");
@@ -74,7 +402,7 @@ namespace HackerRank.AlgorithmWarmUpEasy
          return true;
       }
 
-      public static IEnumerable<string> GetGrid(int row, int col)
+      public static IEnumerable<string> GetGrid2(int row, int col)
       {
          var retArray = new List<string>();
          for (int lineNo = 0; lineNo < row; lineNo++)
