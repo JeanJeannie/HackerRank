@@ -7,6 +7,29 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_RegEx
    {
+
+      public static void AmericanEnglish(int numOfTestCases)
+      {
+         var inputStrings = new List<string>();
+         for (int testCase = 0; testCase < numOfTestCases; testCase++)
+         {
+            inputStrings.Add(Console.ReadLine());
+         }
+
+         var wordNum = Convert.ToInt32(Console.ReadLine());
+         for (int currentWord = 0; currentWord < wordNum; currentWord++)
+         {
+            var foundCount = 0;
+            var wordToFind = Console.ReadLine();
+            var regExText = string.Format(@"\b({0}|{1})\b", wordToFind, wordToFind.Replace("ze", "se"));
+            foreach (var inputStr in inputStrings)
+            {
+               foundCount = foundCount + Regex.Matches(inputStr, regExText).Count;
+            }
+            Console.WriteLine(foundCount);
+         }
+      }
+
       public static void HackerRankLanguage(int numOfTestCases)
       {
          // 5 digits, space, and then word (\b means word boundary so space before/after etc) from the list
