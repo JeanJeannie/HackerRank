@@ -7,6 +7,24 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_RegEx
    {
+      public static void HackerRankLanguage(int numOfTestCases)
+      {
+         // 5 digits, space, and then word (\b means word boundary so space before/after etc) from the list
+         var regEx = new Regex(@"^\d{5}\s\b(C|CPP|JAVA|PYTHON|PERL|PHP|RUBY|CSHARP|HASKELL|CLOJURE|BASH|SCALA|ERLANG|CLISP|LUA|BRAINFUCK|JAVASCRIPT|GO|D|OCAML|R|PASCAL|SBCL|DART|GROOVY|OBJECTIVEC)\b$");
+         for (int testNo = 0; testNo < numOfTestCases; testNo++)
+         {
+            var inputString = Console.ReadLine();
+            if (regEx.IsMatch(inputString))
+            {
+               Console.WriteLine("VALID");
+            }
+            else
+            {
+               Console.WriteLine("INVALID");
+            }
+         }
+      }
+
       public static void SayingHi(int numOfTestCases)
       {
          var regEx = new Regex(@"\A[Hh][Ii]\s[^dD].+");
