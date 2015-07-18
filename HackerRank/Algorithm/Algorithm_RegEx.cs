@@ -7,6 +7,24 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_RegEx
    {
+      public static void UtopianIdentificationNumber(int numOfTestCases)
+      {
+         var regEx = new Regex(@"^[a-z]{0,3}\d{2,8}[A-Z]{3,}$");
+         for (int testNo = 0; testNo < numOfTestCases; testNo++)
+         {
+            var inputString = Console.ReadLine();
+            if (regEx.IsMatch(inputString))
+            {
+               Console.WriteLine("VALID");
+            }
+            else
+            {
+               Console.WriteLine("INVALID");
+            }
+         }
+      }
+
+
       public static void FraudPrevention(int numOfRecords)
       {
          var records = new List<GroupOnRecord>();
