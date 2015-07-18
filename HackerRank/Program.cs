@@ -17,9 +17,11 @@ namespace HackerRank
        static void Main(String[] args)
        {
            /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-        //  UtopianIdentificationNumber(Convert.ToInt32(Console.ReadLine()));
+        // SayingHi(Convert.ToInt32(Console.ReadLine()));
          Console.ReadLine();
        }
+
+
 
       
        public static void FlippingBits()

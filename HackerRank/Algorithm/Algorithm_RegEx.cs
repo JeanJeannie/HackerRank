@@ -7,6 +7,19 @@ namespace HackerRank.Algorithm
 {
    public class Algorithm_RegEx
    {
+      public static void SayingHi(int numOfTestCases)
+      {
+         var regEx = new Regex(@"\A[Hh][Ii]\s[^dD].+");
+         for (int testNo = 0; testNo < numOfTestCases; testNo++)
+         {
+            var inputString = Console.ReadLine();
+            if (regEx.IsMatch(inputString))
+            {
+               Console.WriteLine(inputString);
+            }
+         }
+      }
+
       public static void UtopianIdentificationNumber(int numOfTestCases)
       {
          var regEx = new Regex(@"^[a-z]{0,3}\d{2,8}[A-Z]{3,}$");
